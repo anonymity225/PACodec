@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PACodec</title>
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+
+  <link rel="stylesheet" href="css/bulma.min.css">
+  <link rel="stylesheet" href="css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="css/bulma-slider.min.css">
+  <link rel="stylesheet" href="css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="js/fontawesome.all.min.js"></script>
+  <script src="js/bulma-carousel.min.js"></script>
+  <script src="js/bulma-slider.min.js"></script>
+  <script src="js/index.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">PACodec: A Low-bitrate Neural Speech Codec with Parallel Additive Vector Quantization</h1>
+            <div class="is-size-5 publication-authors">
+              <!-- Paper authors -->
+              
+              <!-- <span class="author-block">
+                <a>Ye-Xin Lu</a>,</span>
+              <span class="author-block">
+                <a href="http://staff.ustc.edu.cn/~yangai" target="_blank">Yang Ai</a>,</span>
+              <span class="author-block">
+                <a>Zheng-Yan Sheng</a>,</span>
+              <span class="author-block">
+                <a href="http://staff.ustc.edu.cn/~zhling" target="_blank">Zhen-Hua Ling</a>,</span> -->
+            </div>
+
+            <!-- <div class="is-size-5 publication-authors">
+              <span class="author-block">National Engineering Research Center of Speech and Language Information Processing <br> University of Science and Technology of China<br></span>
+            </div> -->
+
+            <!-- <div class="column has-text-centered">
+              <div class="publication-links"> -->
+                <!--                   Code Link. -->
+                <!-- <span class="link-block">
+                  <a href="https://github.com/yxlu-0102/AP-BWE" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+                </span> -->
+                <!--                   ArXiv Link -->
+                <!-- <span class="link-block">
+                  <a href="" target="_blank"
+                      class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>Paper</span>
+                  </a>
+                </span>
+              </div>
+            </div> -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            This paper proposes PACodec, a novel low-bitrate neural speech codec based on parallel additive vector quantization (PAVQ). 
+            Unlike the mainstream residual vector quantization (RVQ) used in most neural speech codecs, where vector quantizers (VQs) are sequentially dependent, the PAVQ strategy adopted in PACodec aggregates parallel quantization results to optimize bitrate usage.
+            Specifically, the PAVQ adopts a ''global-local-global'' (GLG) design: the global encoded features are quantized in parallel by multiple independent VQs, each attending to a local component of the representation, and their outputs are aggregated through addition to yield the final global quantization result for decoding.
+            Experimental results show that PACodec, as each VQ focuses only on local information, supports smaller codebooks and reduces bitrate by 30% compared with baselines at the same decoding quality, with only minor model complexity.
+            Further analysis shows that, owing to the GLG framework of PAVQ, the proposed PACodec is disentanglement-friendly, and each independent VQ captures different aspects of speech, e.g., content, timbre, and acoustic details, suggesting potential for application to downstream tasks such as voice conversion.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+<br>
+<section class="hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-centered">
+        <h2 class="title is-3">I. LibriTTS, 16kHz</h2>
+      </div>
+    </div>
+  </div>
+  <br>
+  <table align = "center" style="text-align: center;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-centered">
+          <h3 class="title is-5">Sample 1</h3>
+        </div>
+      </div>
+    </div>
+    <br>
+    <tr>
+      <td style="text-align: center;"><b>Raw Speech</b></th>
+      <td style="text-align: center;"><b>PACodec@1.4kbps</b></th>
+      <td style="text-align: center;"><b>Encodec@1.5kbps</b></th>
+      <td style="text-align: center;"><b>Encodec@2kbps</b></th>
+      <td style="text-align: center;"><b>AudioDec@1.5kbps</b></th>
+      <td style="text-align: center;"><b>AudioDec@2kbps</b></th>
+      <td style="text-align: center;"><b>DAC@1.5kbps</b></th>
+    </tr>
+
+    <tr>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/clean_16k/5683_32865_000015_000000.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_16k/5683_32865_000015_000000.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/encodec_1.5k/5683_32865_000015_000000.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/encodec_2k/5683_32865_000015_000000.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/audiodec_1.5k/5683_32865_000015_000000.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/audiodec_2k/5683_32865_000015_000000.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/dac_1.5k/5683_32865_000015_000000.wav" type="audio/wav"></audio></td>
+    </tr>
+
+
+    <tr>
+      <td style="text-align: center;"><b>DAC@2kbps</b></th>
+      <td style="text-align: center;"><b>APCodec@1.5kbps</b></th>
+      <td style="text-align: center;"><b>APCodec@2kbps</b></th>
+      <td style="text-align: center;"><b>MDCTCodec@1.5kbps</b></th>
+      <td style="text-align: center;"><b>MDCTCodec@2kbps</b></th>
+      <td style="text-align: center;"><b>HiFi-Codec@2kbps</b></th>
+      <td style="text-align: center;"><b>SQCodec@1.5kbps</b></th>
+    </tr>
+
+
+    <tr>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/dac_2k/5683_32865_000015_000000.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/apcodec_1.5k/5683_32865_000015_000000.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/apcodec_2k/5683_32865_000015_000000.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/mdctcodec_1.5k/5683_32865_000015_000000.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/mdctcodec_2k/5683_32865_000015_000000.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/hificodec_2k/5683_32865_000015_000000.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/sqcodec_1.5k/5683_32865_000015_000000.wav" type="audio/wav"></audio></td>
+    </tr>
+  </table>
+  <br>
+  <table align = "center" style="text-align: center;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-centered">
+          <h3 class="title is-5">Sample 2</h3>
+        </div>
+      </div>
+    </div>
+    <br>
+    <tr>
+      <td style="text-align: center;"><b>Raw Speech</b></th>
+      <td style="text-align: center;"><b>PACodec@1.4kbps</b></th>
+      <td style="text-align: center;"><b>Encodec@1.5kbps</b></th>
+      <td style="text-align: center;"><b>Encodec@2kbps</b></th>
+      <td style="text-align: center;"><b>AudioDec@1.5kbps</b></th>
+      <td style="text-align: center;"><b>AudioDec@2kbps</b></th>
+      <td style="text-align: center;"><b>DAC@1.5kbps</b></th>
+    </tr>
+
+    <tr>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/clean_16k/6829_68769_000024_000000.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_16k/6829_68769_000024_000000.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/encodec_1.5k/6829_68769_000024_000000.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/encodec_2k/6829_68769_000024_000000.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/audiodec_1.5k/6829_68769_000024_000000.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/audiodec_2k/6829_68769_000024_000000.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/dac_1.5k/6829_68769_000024_000000.wav" type="audio/wav"></audio></td>
+    </tr>
+
+
+    <tr>
+      <td style="text-align: center;"><b>DAC@2kbps</b></th>
+      <td style="text-align: center;"><b>APCodec@1.5kbps</b></th>
+      <td style="text-align: center;"><b>APCodec@2kbps</b></th>
+      <td style="text-align: center;"><b>MDCTCodec@1.5kbps</b></th>
+      <td style="text-align: center;"><b>MDCTCodec@2kbps</b></th>
+      <td style="text-align: center;"><b>HiFi-Codec@2kbps</b></th>
+      <td style="text-align: center;"><b>SQCodec@1.5kbps</b></th>
+    </tr>
+
+
+    <tr>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/dac_2k/6829_68769_000024_000000.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/apcodec_1.5k/6829_68769_000024_000000.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/apcodec_2k/6829_68769_000024_000000.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/mdctcodec_1.5k/6829_68769_000024_000000.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/mdctcodec_2k/6829_68769_000024_000000.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/hificodec_2k/6829_68769_000024_000000.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/sqcodec_1.5k/6829_68769_000024_000000.wav" type="audio/wav"></audio></td>
+    </tr>
+    </table>
+    <br>
+    <table align = "center" style="text-align: center;">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-centered">
+            <h2 class="title is-5">Sample 3</h2>
+          </div>
+        </div>
+      </div>
+      <br>
+      <tr>
+        <td style="text-align: center;"><b>Raw Speech</b></th>
+        <td style="text-align: center;"><b>PACodec@1.4kbps</b></th>
+        <td style="text-align: center;"><b>Encodec@1.5kbps</b></th>
+        <td style="text-align: center;"><b>Encodec@2kbps</b></th>
+        <td style="text-align: center;"><b>AudioDec@1.5kbps</b></th>
+        <td style="text-align: center;"><b>AudioDec@2kbps</b></th>
+        <td style="text-align: center;"><b>DAC@1.5kbps</b></th>
+      </tr>
+  
+      <tr>
+        <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/clean_16k/7127_75947_000023_000006.wav" type="audio/wav"></audio></td>
+        <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_16k/7127_75947_000023_000006.wav" type="audio/wav"></audio></td>
+        <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/encodec_1.5k/7127_75947_000023_000006.wav" type="audio/wav"></audio></td>
+        <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/encodec_2k/7127_75947_000023_000006.wav" type="audio/wav"></audio></td>
+        <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/audiodec_1.5k/7127_75947_000023_000006.wav" type="audio/wav"></audio></td>
+        <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/audiodec_2k/7127_75947_000023_000006.wav" type="audio/wav"></audio></td>
+        <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/dac_1.5k/7127_75947_000023_000006.wav" type="audio/wav"></audio></td>
+      </tr>
+  
+  
+      <tr>
+        <td style="text-align: center;"><b>DAC@2kbps</b></th>
+        <td style="text-align: center;"><b>APCodec@1.5kbps</b></th>
+        <td style="text-align: center;"><b>APCodec@2kbps</b></th>
+        <td style="text-align: center;"><b>MDCTCodec@1.5kbps</b></th>
+        <td style="text-align: center;"><b>MDCTCodec@2kbps</b></th>
+        <td style="text-align: center;"><b>HiFi-Codec@2kbps</b></th>
+        <td style="text-align: center;"><b>SQCodec@1.5kbps</b></th>
+      </tr>
+  
+  
+      <tr>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/dac_2k/7127_75947_000023_000006.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/apcodec_1.5k/7127_75947_000023_000006.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/apcodec_2k/7127_75947_000023_000006.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/mdctcodec_1.5k/7127_75947_000023_000006.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/mdctcodec_2k/7127_75947_000023_000006.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/hificodec_2k/7127_75947_000023_000006.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/sqcodec_1.5k/7127_75947_000023_000006.wav" type="audio/wav"></audio></td>
+      </tr>
+      </table>
+</section>
+
+<hr>
+<section class="hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-centered">
+        <h2 class="title is-3">II. VCTK, 48kHz</h2>
+      </div>
+    </div>
+  </div>
+  <br>
+  <table align = "center" style="text-align: center;">
+
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-centered">
+          <h2 class="title is-5">Sample 1</h2>
+        </div>
+      </div>
+    </div>
+    <br>
+    <tr>
+      <td style="text-align: center;"><b>Raw Speech</b></th>
+      <td style="text-align: center;"><b>PACodec@4.2kbps</b></th>
+      <td style="text-align: center;"><b>Encodec@4.5kbps</b></th>
+      <td style="text-align: center;"><b>Encodec@6kbps</b></th>
+      <td style="text-align: center;"><b>AudioDec@4.5kbps</b></th>
+      <td style="text-align: center;"><b>AudioDec@6kbps</b></th>
+      <td style="text-align: center;"><b>DAC@4.5kbps</b></th>
+    </tr>
+
+    <tr>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/clean_48k/p360_001.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_48k/p360_001.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/encodec_4.5k/p360_001.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/encodec_6k/p360_001.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/audiodec_4.5k/p360_001.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/audiodec_6k/p360_001.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/dac_4.5k/p360_001.wav" type="audio/wav"></audio></td>
+    </tr>
+
+
+    <tr>
+      <td style="text-align: center;"><b>DAC@6kbps</b></th>
+      <td style="text-align: center;"><b>APCodec@4.5kbps</b></th>
+      <td style="text-align: center;"><b>APCodec@6kbps</b></th>
+      <td style="text-align: center;"><b>MDCTCodec@4.5kbps</b></th>
+      <td style="text-align: center;"><b>MDCTCodec@6kbps</b></th>
+      <td style="text-align: center;"><b>HiFi-Codec@6kbps</b></th>
+    </tr>
+
+
+    <tr>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/dac_6k/p360_001.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/apcodec_4.5k/p360_001.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/apcodec_6k/p360_001.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/mdctcodec_4.5k/p360_001.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/mdctcodec_6k/p360_001.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/hificodec_6k/p360_001.wav" type="audio/wav"></audio></td>
+    </tr>
+
+  </table>
+  <br>
+  <table align = "center" style="text-align: center;">
+
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-centered">
+          <h2 class="title is-5">Sample 2</h2>
+        </div>
+      </div>
+    </div>
+    <br>
+    <tr>
+      <td style="text-align: center;"><b>Raw Speech</b></th>
+      <td style="text-align: center;"><b>PACodec@4.2kbps</b></th>
+      <td style="text-align: center;"><b>Encodec@4.5kbps</b></th>
+      <td style="text-align: center;"><b>Encodec@6kbps</b></th>
+      <td style="text-align: center;"><b>AudioDec@4.5kbps</b></th>
+      <td style="text-align: center;"><b>AudioDec@6kbps</b></th>
+      <td style="text-align: center;"><b>DAC@4.5kbps</b></th>
+    </tr>
+
+    <tr>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/clean_48k/p360_002.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_48k/p360_002.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/encodec_4.5k/p360_002.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/encodec_6k/p360_002.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/audiodec_4.5k/p360_002.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/audiodec_6k/p360_002.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/dac_4.5k/p360_002.wav" type="audio/wav"></audio></td>
+    </tr>
+
+
+    <tr>
+      <td style="text-align: center;"><b>DAC@6kbps</b></th>
+      <td style="text-align: center;"><b>APCodec@4.5kbps</b></th>
+      <td style="text-align: center;"><b>APCodec@6kbps</b></th>
+      <td style="text-align: center;"><b>MDCTCodec@4.5kbps</b></th>
+      <td style="text-align: center;"><b>MDCTCodec@6kbps</b></th>
+      <td style="text-align: center;"><b>HiFi-Codec@6kbps</b></th>
+    </tr>
+
+
+    <tr>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/dac_6k/p360_002.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/apcodec_4.5k/p360_002.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/apcodec_6k/p360_002.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/mdctcodec_4.5k/p360_002.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/mdctcodec_6k/p360_002.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/hificodec_6k/p360_002.wav" type="audio/wav"></audio></td>
+    </tr>
+
+  </table>
+  <br>
+  <table align = "center" style="text-align: center;">
+
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-centered">
+          <h2 class="title is-5">Sample 3</h2>
+        </div>
+      </div>
+    </div>
+    <br>
+    <tr>
+      <td style="text-align: center;"><b>Raw Speech</b></th>
+      <td style="text-align: center;"><b>PACodec@4.2kbps</b></th>
+      <td style="text-align: center;"><b>Encodec@4.5kbps</b></th>
+      <td style="text-align: center;"><b>Encodec@6kbps</b></th>
+      <td style="text-align: center;"><b>AudioDec@4.5kbps</b></th>
+      <td style="text-align: center;"><b>AudioDec@6kbps</b></th>
+      <td style="text-align: center;"><b>DAC@4.5kbps</b></th>
+    </tr>
+
+    <tr>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/clean_48k/p360_003.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_48k/p360_003.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/encodec_4.5k/p360_003.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/encodec_6k/p360_003.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/audiodec_4.5k/p360_003.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/audiodec_6k/p360_003.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/dac_4.5k/p360_003.wav" type="audio/wav"></audio></td>
+    </tr>
+
+
+    <tr>
+      <td style="text-align: center;"><b>DAC@6kbps</b></th>
+      <td style="text-align: center;"><b>APCodec@4.5kbps</b></th>
+      <td style="text-align: center;"><b>APCodec@6kbps</b></th>
+      <td style="text-align: center;"><b>MDCTCodec@4.5kbps</b></th>
+      <td style="text-align: center;"><b>MDCTCodec@6kbps</b></th>
+      <td style="text-align: center;"><b>HiFi-Codec@6kbps</b></th>
+    </tr>
+
+
+    <tr>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/dac_6k/p360_003.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/apcodec_4.5k/p360_003.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/apcodec_6k/p360_003.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/mdctcodec_4.5k/p360_003.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/mdctcodec_6k/p360_003.wav" type="audio/wav"></audio></td>
+    <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/hificodec_6k/p360_003.wav" type="audio/wav"></audio></td>
+    </tr>
+
+  </table>
+</section>
+<hr>
+<section class="hero">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-centered">
+        <h2 class="title is-3">III. Disentanglement Potential Analysis (VCTK, 48kHz)</h2>
+      </div>
+    </div>
+  </div>
+  <br>
+  <table align = "center" style="text-align: center;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-centered">
+          <h2 class="title is-5">Sample 1</h2>
+        </div>
+      </div>
+    </div>
+    <br>
+    <tr>
+      <td style="text-align: center;"><b>Raw Speech</b></th>
+      <td style="text-align: center;"><b>PACodec</b></th>
+      <td style="text-align: center;"><b>PACodec-VQ1</b></th>
+      <td style="text-align: center;"><b>PACodec-VQ2</b></th>
+      <td style="text-align: center;"><b>PACodec-VQ3</b></th>
+      <td style="text-align: center;"><b>PACodec-VQ4</b></th>
+    </tr>
+
+    <tr>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/clean_48k/p360_001.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_48k/p360_001.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_vq1/p360_001.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_vq2/p360_001.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_vq3/p360_001.wav" type="audio/wav"></audio></td>
+      <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_vq4/p360_001.wav" type="audio/wav"></audio></td>
+    </tr>
+    </table>
+    <br>
+    <table align = "center" style="text-align: center;">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-centered">
+            <h2 class="title is-5">Sample 2</h2>
+          </div>
+        </div>
+      </div>
+      <br>
+      <tr>
+        <td style="text-align: center;"><b>Raw Speech</b></th>
+        <td style="text-align: center;"><b>PACodec</b></th>
+        <td style="text-align: center;"><b>PACodec-VQ1</b></th>
+        <td style="text-align: center;"><b>PACodec-VQ2</b></th>
+        <td style="text-align: center;"><b>PACodec-VQ3</b></th>
+        <td style="text-align: center;"><b>PACodec-VQ4</b></th>
+      </tr>
+  
+      <tr>
+        <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/clean_48k/p360_002.wav" type="audio/wav"></audio></td>
+        <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_48k/p360_002.wav" type="audio/wav"></audio></td>
+        <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_vq1/p360_002.wav" type="audio/wav"></audio></td>
+        <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_vq2/p360_002.wav" type="audio/wav"></audio></td>
+        <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_vq3/p360_002.wav" type="audio/wav"></audio></td>
+        <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_vq4/p360_002.wav" type="audio/wav"></audio></td>
+      </tr>
+      </table>
+      <br>
+      <table align = "center" style="text-align: center;">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-centered">
+              <h2 class="title is-5">Sample 3</h2>
+            </div>
+          </div>
+        </div>
+        <br>
+        <tr>
+          <td style="text-align: center;"><b>Raw Speech</b></th>
+          <td style="text-align: center;"><b>PACodec</b></th>
+          <td style="text-align: center;"><b>PACodec-VQ1</b></th>
+          <td style="text-align: center;"><b>PACodec-VQ2</b></th>
+          <td style="text-align: center;"><b>PACodec-VQ3</b></th>
+          <td style="text-align: center;"><b>PACodec-VQ4</b></th>
+        </tr>
+    
+        <tr>
+          <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/clean_48k/p360_003.wav" type="audio/wav"></audio></td>
+          <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_48k/p360_003.wav" type="audio/wav"></audio></td>
+          <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_vq1/p360_003.wav" type="audio/wav"></audio></td>
+          <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_vq2/p360_003.wav" type="audio/wav"></audio></td>
+          <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_vq3/p360_003.wav" type="audio/wav"></audio></td>
+          <td><audio controls="" style='display: inline-block; width: 200px; height: 50px;'><source src="wavs/PACodec_vq4/p360_003.wav" type="audio/wav"></audio></td>
+        </tr>
+        </table>
+        <br>
+</section>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
